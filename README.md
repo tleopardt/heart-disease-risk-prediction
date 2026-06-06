@@ -10,13 +10,67 @@ python3 optuna-tuning/run.py
 python3 heart-disease-prediction/run.py
 ```
 
-
 # Heart disease prediction
 
-Predicts presence of heart disease using clinical features.
-**Best model:** XGBoost (Optuna-tuned) — 0.9174.
+## Dataset
+- Source: Heart Disease Dataset
+- Original records: 1,025
+- Duplicate records: 723
+- Unique records after cleaning: 302
+- Features: 13 clinical features
+- Target: Heart disease (0/1)
+
+## Project Structure
+python/
+├── heart-disease-prediction/
+    └── run.py
+├── optuna-tuning/
+    ├──test
+        └── run.py
+    └── test-model.py
+├── .gitignore
+├── model_tuned.pkl
+├── README.md
+└── requirements.txt
+
+## Methodology
+
+```text
+Raw Dataset (1,025 rows)
+        ↓
+Data Cleaning
+- Handle missing values
+- Fix data types
+- Remove 723 duplicate records
+        ↓
+Exploratory Data Analysis (EDA)
+- Feature distributions
+- Correlation heatmap
+- Target distribution
+        ↓
+Feature Analysis
+- XGBoost feature importance
+- Identify key predictors
+        ↓
+Hyperparameter Tuning
+- Optuna optimization
+- 5-fold cross validation
+        ↓
+Model Evaluation
+- Logistic Regression
+- Random Forest
+- XGBoost
+- AUC & F1 comparison
+        ↓
+Error Analysis
+- False Positive analysis
+- False Negative analysis
+- Identify difficult patient profiles
+```
 
 ## Results
+Predicts presence of heart disease using clinical features.
+**Best model:** XGBoost (Optuna-tuned) — 0.9174.
 
 | Model                   | AUC (5-fold CV)  | F1               |
 |-------------------------|------------------|------------------|
@@ -26,7 +80,7 @@ Predicts presence of heart disease using clinical features.
 
 
 ## Key findings
-- Found 723 duplicates data and 303 unique data. Removing the duplicates reduced data leakage risk during cross validation
+Found 723 duplicates data and 303 unique data. Removing the duplicates reduced data leakage risk during cross validation
 produce a more realistic model evaluation.
 
 ![Distributions](images/eda_distributions.png)
@@ -34,7 +88,7 @@ produce a more realistic model evaluation.
 ![Evaluation Report](images/eval_report.png)
 
 ### The most important feature and why
-- The chest pain type `(cp)` feature contributed the most to the model because it provided the strongest signal for distinguishing patients with and without heart disease.
+The chest pain type `(cp)` feature contributed the most to the model because it provided the strongest signal for distinguishing patients with and without heart disease.
 ![Heart Disease Feature Importance](images/heart-disease-feature-importances.png)
 
 ### Where the model still fails
@@ -47,7 +101,7 @@ produce a more realistic model evaluation.
 | XGBoost                 | 9                | 4                | 13               |
 
 **False Negative & False Positive**
-- The model struggles to classify patients whose clinical indicators appear close to the healthy group. Most false-negative cases have low chest-pain scores `(cp=0)` and low vessel counts `(ca)`, making them difficult to distinguish from healthy patients.
+The model struggles to classify patients whose clinical indicators appear close to the healthy group. Most false-negative cases have low chest-pain scores `(cp=0)` and low vessel counts `(ca)`, making them difficult to distinguish from healthy patients.
 
 ```
              FN      FP  Dataset
