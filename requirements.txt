@@ -1,0 +1,10 @@
+optuna
+joblib
+scikit-learn
+matplotlib
+pandas
+numpy
+kagglehub
+xgboost
+scipy
+seaborn
